@@ -15,7 +15,7 @@ struct Note: Identifiable, Codable {
 }
 
 class NoteManager: ObservableObject {
-    @Published var notes = [Note(id: UUID(), noteName: "Test name", text: "Test note")]
+    @Published var notes = [Note(id: UUID(), noteName: "Идею по приложению ЦФТ", text: "Возможность редактирования любой заметки из списка")]
     @Published var changedNoteName = ""
     @Published var changedNoteText = ""
 }

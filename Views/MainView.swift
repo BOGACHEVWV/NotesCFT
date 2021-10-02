@@ -28,6 +28,7 @@ struct MainView: View {
                             .hidden()
                         }
                     }
+                    .onDelete(perform: delete)
                 }
             }
             .navigationTitle("Заметки")
@@ -46,5 +47,10 @@ struct MainView: View {
 struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         MainView()
+    }
+}
+extension MainView {
+    func delete(indexSet: IndexSet) {
+        noteManager.notes.remove(atOffsets: indexSet)
     }
 }
