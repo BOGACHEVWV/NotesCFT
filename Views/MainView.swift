@@ -6,37 +6,40 @@
 //
 
 import SwiftUI
+import Combine
 
 struct MainView: View {
-        
+    
+//    @EnvironmentObject var noteManager: NoteManager
+    @ObservedObject var noteManager = NoteManager()
+    
+    @State var newNoteText: String = ""
+    
     var body: some View {
         NavigationView  {
-            List {
-                ForEach(0..<20) { item in
-                    ZStack {
-                        noteCell(item: item)
-                        NavigationLink(destination: NoteView()) {
-                            EmptyView()
+            VStack {
+                List {
+                    ForEach(noteManager.notes, id: \.id) { note in
+                        // ZStack и .hidden нужны, чтобы убрать срелку справа (шеврон появляется при добавлении NavigationLink в List/ForEach).
+                        ZStack {
+                            NoteCell(name: note.noteName, text: note.text)
+                            NavigationLink(destination: NoteView(id: note.id, note: note)) {
+                            }
+                            .hidden()
                         }
-                        .hidden()
-                        
                     }
-                    
                 }
-                
-                
             }
-            
             .navigationTitle("Заметки")
-            .navigationBarItems(trailing: NavigationLink(destination: NoteView()) {
+            .navigationBarItems(trailing: NavigationLink(destination: NewNoteView()) {
                 Image(systemName: "plus")
                     .font(.title)
             })
         }
-//        .buttonStyle(PlainButtonStyle())
+        .environmentObject(noteManager)
+        // На данный момент в SwiftUI нет возможно изменить цвет NavigationBar'а(или я не нашел), когда он не inline. Данный костыль помогает справиться с этой задачей.
         .navigationAppearance(backgroundColor: .systemRed, foregroundColor: .systemBackground, tintColor: .systemBackground, hideSeparator: true)
         .navigationViewStyle(StackNavigationViewStyle())
-        
     }
 }
 
@@ -45,36 +48,3 @@ struct MainView_Previews: PreviewProvider {
         MainView()
     }
 }
-
-struct noteCell: View {
-    var item: Int
-    var body: some View {
-     
-            
-            VStack {
-                HStack {
-                    Text("Text  \(item)")
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.9)
-                        .font(.headline)
-                    Spacer()
-                    
-                }
-                Spacer()
-                HStack {
-                    Text("28.09.2021")
-                    Text("20:20")
-                    Spacer()
-                    // если массив с карниками не пуст
-                    Image(systemName: "photo.on.rectangle")
-                    //                            .resizable()
-                    //                            .scaledToFit()
-                }
-                .font(.footnote)
-                .foregroundColor(.secondary)
-            }
-            .padding(.vertical, 5)
-        
-    }
-}
-

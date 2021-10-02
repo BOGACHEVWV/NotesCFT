@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+// На данный момент в SwiftUI нет возможно изменить цвет NavigationBar'а, когда он не inline. Данный костыль помогает справиться с этой задачей. 
 struct NavAppearanceModifier: ViewModifier {
     init(backgroundColor: UIColor, foregroundColor: UIColor, tintColor: UIColor?, hideSeparator: Bool) {
         let navBarAppearance = UINavigationBarAppearance()
