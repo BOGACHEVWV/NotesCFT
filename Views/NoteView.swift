@@ -30,7 +30,6 @@ struct NoteView: View {
             noteManager.changedNoteName = note.noteName
             noteManager.changedNoteText = note.text
         }
-        .navigationTitle("\(noteManager.changedNoteName)")
         .navigationBarTitleDisplayMode(.inline)
 //            .environmentObject(noteManager)
         .navigationBarItems(trailing: Button(action: {noteViewPresentation.wrappedValue.dismiss(); print("noteName: \(noteManager.changedNoteName) noteText: \(noteManager.changedNoteText)"); changeNote()}) {

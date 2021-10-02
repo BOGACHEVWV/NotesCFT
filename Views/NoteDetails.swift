@@ -16,6 +16,7 @@ struct NoteDetails: View {
             VStack(alignment: .leading) {
                 TextField("Note name", text: $name)
                     .font(.title)
+                    .minimumScaleFactor(0.6)
                 HStack {
                     Text("28.09.2021")
                     Text("20:20")
