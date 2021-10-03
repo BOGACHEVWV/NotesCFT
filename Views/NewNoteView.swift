@@ -11,24 +11,24 @@ struct NewNoteView: View {
     
     @Environment(\.presentationMode) var newNoteViewPresentation
     
-    @EnvironmentObject var noteManager: NoteManager
+    @EnvironmentObject var noteListVM: NotesListViewModel
     
     
-    @State var newNoteName = ""
-    @State var newNoteText = ""
+//    @State var newNoteName = ""
+//    @State var newNoteText = ""
     var body: some View {
       
         Group {
-            NoteDetails(name: $newNoteName, text: $newNoteText)
+            NoteDetails(name: $noteListVM.noteName, text: $noteListVM.noteText)
         }
         
-            .navigationTitle("\(newNoteName)")
+//            .navigationTitle("\(newNoteName)")
             .navigationBarTitleDisplayMode(.inline)
 //            .environmentObject(noteManager)
             .navigationBarItems(trailing: Button(action: {addNote()}) {
                 Image(systemName: "checkmark")
             }
-            .disabled(newNoteText == "" ? true : false)
+//            .disabled(newNoteText == "" ? true : false)
             )
             
     }
@@ -44,10 +44,12 @@ struct NewNoteView_Previews: PreviewProvider {
 
 extension NewNoteView {
      func addNote() {
-        noteManager.notes.append(Note(id: UUID(), noteName: newNoteName == "" ? newNoteText : newNoteName, text: newNoteText))
-        
+//        noteManager.notes.append(Note(id: UUID(), noteName: newNoteName == "" ? newNoteText : newNoteName, noteText: newNoteText))
+        noteListVM.save()
+        noteListVM.getAllNotes()
+
         newNoteViewPresentation.wrappedValue.dismiss()
-        print(noteManager.notes)
+        print(noteListVM.notes)
     }
 }
 

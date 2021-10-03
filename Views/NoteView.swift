@@ -10,60 +10,44 @@ import SwiftUI
 struct NoteView: View {
     
     @Environment(\.presentationMode) var noteViewPresentation
+    @EnvironmentObject var noteListVM: NotesListViewModel
+//    @State var noteViewModelState = NoteViewModel(note: Note())
     
-    @EnvironmentObject var noteManager: NoteManager
     
-//    @State var changedNoteName = ""
-//    @State var changedNoteText = ""
-    @State var id: UUID
+//    @State var changedNoteName: String 
+//    @State var changedNoteText: String
+//    @State var id: NSManagedObjectID
+//    @State var id: NSManagedObjectID
     
-    @State var note: Note
+//    @State var note: Note
     
     
     var body: some View {
         // не должно быть константой
         Group {
-            NoteDetails(name: $noteManager.changedNoteName, text: $noteManager.changedNoteText)
-
+            NoteDetails(name: $noteListVM.noteName, text: $noteListVM.noteText)
         }
         .onAppear() {
-            noteManager.changedNoteName = note.noteName
-            noteManager.changedNoteText = note.text
+            
         }
         .navigationBarTitleDisplayMode(.inline)
 //            .environmentObject(noteManager)
-        .navigationBarItems(trailing: Button(action: {noteViewPresentation.wrappedValue.dismiss(); print("noteName: \(noteManager.changedNoteName) noteText: \(noteManager.changedNoteText)"); changeNote()}) {
+        .navigationBarItems(trailing: Button(action: { changeNote() }) {
             Image(systemName: "checkmark")
         })
     }
 }
 
-struct NoteView_Previews: PreviewProvider {
-    static var previews: some View {
-        NoteView(id: UUID(), note: Note(id: UUID(), noteName: "", text: ""))
-    }
-}
+//struct NoteView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NoteView(id: UUID(), note: Note(id: UUID(), noteName: "", noteText: ""))
+//    }
+//}
 
 extension NoteView {
     func changeNote() {
-       
-        if let row = self.noteManager.notes.firstIndex(where: {$0.id == id}) {
-            noteManager.notes[row] = Note(noteName: noteManager.changedNoteName, text: noteManager.changedNoteText)
-//            noteManager.notes[row].noteName = noteManager.changedNoteName
-//            noteManager.notes[row].text = noteManager.changedNoteText
-//            noteManager.notes.remove(at: row)
-//            note.noteName = noteManager.changedNoteName
-//            note.text = noteManager.changedNoteText
-        }
+//        noteListVM.updateNote(name: changedNoteName, text: changedNoteText)
         
-        
-
-        
-//        noteManager.notes.append(Note(id: UUID(), noteName: changedNoteName == "" ? note.noteName : note.noteName, text: note.text))
-//        
         noteViewPresentation.wrappedValue.dismiss()
-        print(noteManager.notes)
     }
-        
-    
 }

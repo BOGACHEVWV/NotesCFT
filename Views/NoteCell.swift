@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NoteCell: View {
     
-    @EnvironmentObject var noteManager: NoteManager
+//    @EnvironmentObject var noteManager: NoteManager
     
     var name: String
     var text: String
