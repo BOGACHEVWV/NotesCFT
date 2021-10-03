@@ -11,7 +11,7 @@ struct NewNoteView: View {
     
     @Environment(\.presentationMode) var newNoteViewPresentation
     
-    @EnvironmentObject var noteManager: NoteManager
+    @EnvironmentObject var taskListVM: TaskListViewModel
     
     
     @State var newNoteName = ""
@@ -19,7 +19,7 @@ struct NewNoteView: View {
     var body: some View {
       
         Group {
-            NoteDetails(name: $newNoteName, text: $newNoteText)
+            NoteDetails(name: $taskListVM.noteName, text: $taskListVM.noteText)
         }
         
             .navigationTitle("\(newNoteName)")
@@ -28,7 +28,7 @@ struct NewNoteView: View {
             .navigationBarItems(trailing: Button(action: {addNote()}) {
                 Image(systemName: "checkmark")
             }
-            .disabled(newNoteText == "" ? true : false)
+//            .disabled(newNoteText == "" ? true : false)
             )
             
     }
@@ -44,10 +44,12 @@ struct NewNoteView_Previews: PreviewProvider {
 
 extension NewNoteView {
      func addNote() {
-        noteManager.notes.append(Note(id: UUID(), noteName: newNoteName == "" ? newNoteText : newNoteName, text: newNoteText))
-        
+//        noteManager.notes.append(Note(id: UUID(), noteName: newNoteName == "" ? newNoteText : newNoteName, noteText: newNoteText))
+        taskListVM.save()
+        taskListVM.getAllTasks()
+
         newNoteViewPresentation.wrappedValue.dismiss()
-        print(noteManager.notes)
+        print(taskListVM.tasks)
     }
 }
 
