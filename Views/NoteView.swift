@@ -11,7 +11,7 @@ struct NoteView: View {
     
     @Environment(\.presentationMode) var noteViewPresentation
     
-    @EnvironmentObject var taskListVM: TaskListViewModel
+    @EnvironmentObject var noteListVM: NotesListViewModel
     
     @State var changedNoteName = ""
     @State var changedNoteText = ""
@@ -23,12 +23,12 @@ struct NoteView: View {
     var body: some View {
         // не должно быть константой
         Group {
-            NoteDetails(name: $taskListVM.noteName, text: $taskListVM.noteText)
+            NoteDetails(name: $noteListVM.noteName, text: $noteListVM.noteText)
 
         }
 //        .onAppear() {
-//            taskListVM.changedNoteName = taskListVM.noteName
-//            taskListVM.changedNoteText = taskListVM.noteText
+//            noteListVM.changedNoteName = noteListVM.noteName
+//            noteListVM.changedNoteText = noteListVM.noteText
 //        }
         .navigationBarTitleDisplayMode(.inline)
 //            .environmentObject(noteManager)
@@ -46,25 +46,7 @@ struct NoteView: View {
 
 extension NoteView {
     func changeNote() {
-        
-//        if let row = self.taskListVM.tasks firstIndex(where: {$0.id == id}) {
-            
-//            noteManager.notes[row] = Note(noteName: noteManager.changedNoteName, noteText: noteManager.changedNoteText)
-            
-//            noteManager.notes[row].noteName = noteManager.changedNoteName
-//            noteManager.notes[row].text = noteManager.changedNoteText
-//            noteManager.notes.remove(at: row)
-//            note.noteName = noteManager.changedNoteName
-//            note.text = noteManager.changedNoteText
-//        }
-        
-        
-
-        
-//        noteManager.notes.append(Note(id: UUID(), noteName: changedNoteName == "" ? note.noteName : note.noteName, text: note.text))
-//        
+        noteListVM.getAllNotes()
         noteViewPresentation.wrappedValue.dismiss()
-    }
-        
-    
+    }    
 }

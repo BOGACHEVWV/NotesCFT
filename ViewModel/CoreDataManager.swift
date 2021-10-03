@@ -16,7 +16,7 @@ class CoreDataManager {
         return persistantContainer.viewContext
     }
     
-    func getTaskById(id:NSManagedObjectID) -> Note? {
+    func getNoteById(id:NSManagedObjectID) -> Note? {
         do {
         return try viewContext.existingObject(with: id) as? Note
         } catch {
@@ -24,12 +24,12 @@ class CoreDataManager {
         }
     }
     
-    func deleteTask(note: Note) {
+    func deleteNote(note: Note) {
         viewContext.delete(note)
         save()
     }
     
-    func getAllTasks() -> [Note] {
+    func getAllNotes() -> [Note] {
         let request:NSFetchRequest<Note> = Note.fetchRequest()
         do {
         return try viewContext.fetch(request)
@@ -49,7 +49,7 @@ class CoreDataManager {
     
     let persistantContainer: NSPersistentContainer
     private  init() {
-        persistantContainer = NSPersistentContainer(name: "TodoAppModel")
+        persistantContainer = NSPersistentContainer(name: "NotesAppModel")
         persistantContainer.loadPersistentStores { (describtion, error) in
             if let error = error {
                 fatalError("Unable to initilize Core Date Stack \(error )")

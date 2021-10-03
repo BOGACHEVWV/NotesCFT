@@ -12,14 +12,14 @@ struct MainView: View {
     
 //    @EnvironmentObject var noteManager: NoteManager
 //    @ObservedObject var noteManager = NoteManager()
-    @ObservedObject private var taskListVM = TaskListViewModel()
+    @ObservedObject private var noteListVM = NotesListViewModel()
     
-    func deleteTask(at offsets: IndexSet) {
+    func deleteNote(at offsets: IndexSet) {
         offsets.forEach { index in
-            let task = taskListVM.tasks[index]
-            taskListVM.delete(task)
+            let note = noteListVM.notes[index]
+            noteListVM.delete(note)
         }
-        taskListVM.getAllTasks()
+        noteListVM.getAllNotes()
     }
     
     @State var newNoteText: String = ""
@@ -28,21 +28,16 @@ struct MainView: View {
         NavigationView  {
             VStack {
                 List {
-                    ForEach(taskListVM.tasks, id: \.id) { note in
+                    ForEach(noteListVM.notes, id: \.id) { note in
                         // ZStack и .hidden нужны, чтобы убрать срелку справа (шеврон появляется при добавлении NavigationLink в List/ForEach).
                         ZStack {
-//                            HStack {
-//                                Text("\(note.noteName)")
-//                                Spacer()
-//                                Text("\(taskListVM.noteText)")
-//                            }
                             NoteCell(name: note.noteName, text: note.noteName)
                             NavigationLink(destination: NoteView()) {
                             }
                             .hidden()
                         }
                     }
-                    .onDelete(perform: deleteTask)
+                    .onDelete(perform: deleteNote)
                 }
             }
             .navigationTitle("Заметки")
@@ -51,9 +46,9 @@ struct MainView: View {
                     .font(.title)
             })
         }
-        .environmentObject(taskListVM)
+        .environmentObject(noteListVM)
         .onAppear() {
-            taskListVM.getAllTasks()
+            noteListVM.getAllNotes()
         }
         // На данный момент в SwiftUI нет возможно изменить цвет NavigationBar'а(или я не нашел), когда он не inline. Данный костыль помогает справиться с этой задачей.
         .navigationAppearance(backgroundColor: .systemRed, foregroundColor: .systemBackground, tintColor: .systemBackground, hideSeparator: true)

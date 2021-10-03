@@ -11,7 +11,7 @@ struct NewNoteView: View {
     
     @Environment(\.presentationMode) var newNoteViewPresentation
     
-    @EnvironmentObject var taskListVM: TaskListViewModel
+    @EnvironmentObject var noteListVM: NotesListViewModel
     
     
     @State var newNoteName = ""
@@ -19,7 +19,7 @@ struct NewNoteView: View {
     var body: some View {
       
         Group {
-            NoteDetails(name: $taskListVM.noteName, text: $taskListVM.noteText)
+            NoteDetails(name: $noteListVM.noteName, text: $noteListVM.noteText)
         }
         
             .navigationTitle("\(newNoteName)")
@@ -45,11 +45,11 @@ struct NewNoteView_Previews: PreviewProvider {
 extension NewNoteView {
      func addNote() {
 //        noteManager.notes.append(Note(id: UUID(), noteName: newNoteName == "" ? newNoteText : newNoteName, noteText: newNoteText))
-        taskListVM.save()
-        taskListVM.getAllTasks()
+        noteListVM.save()
+        noteListVM.getAllNotes()
 
         newNoteViewPresentation.wrappedValue.dismiss()
-        print(taskListVM.tasks)
+        print(noteListVM.notes)
     }
 }
 
