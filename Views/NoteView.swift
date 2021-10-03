@@ -10,12 +10,14 @@ import SwiftUI
 struct NoteView: View {
     
     @Environment(\.presentationMode) var noteViewPresentation
-    
     @EnvironmentObject var noteListVM: NotesListViewModel
+//    @State var noteViewModelState = NoteViewModel(note: Note())
     
-    @State var changedNoteName = ""
-    @State var changedNoteText = ""
-//    @State var id: UUID
+    
+//    @State var changedNoteName: String 
+//    @State var changedNoteText: String
+//    @State var id: NSManagedObjectID
+//    @State var id: NSManagedObjectID
     
 //    @State var note: Note
     
@@ -24,12 +26,10 @@ struct NoteView: View {
         // не должно быть константой
         Group {
             NoteDetails(name: $noteListVM.noteName, text: $noteListVM.noteText)
-
         }
-//        .onAppear() {
-//            noteListVM.changedNoteName = noteListVM.noteName
-//            noteListVM.changedNoteText = noteListVM.noteText
-//        }
+        .onAppear() {
+            
+        }
         .navigationBarTitleDisplayMode(.inline)
 //            .environmentObject(noteManager)
         .navigationBarItems(trailing: Button(action: { changeNote() }) {
@@ -46,7 +46,8 @@ struct NoteView: View {
 
 extension NoteView {
     func changeNote() {
-        noteListVM.getAllNotes()
+//        noteListVM.updateNote(name: changedNoteName, text: changedNoteText)
+        
         noteViewPresentation.wrappedValue.dismiss()
-    }    
+    }
 }

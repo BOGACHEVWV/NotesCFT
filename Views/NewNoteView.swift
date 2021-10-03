@@ -14,15 +14,15 @@ struct NewNoteView: View {
     @EnvironmentObject var noteListVM: NotesListViewModel
     
     
-    @State var newNoteName = ""
-    @State var newNoteText = ""
+//    @State var newNoteName = ""
+//    @State var newNoteText = ""
     var body: some View {
       
         Group {
             NoteDetails(name: $noteListVM.noteName, text: $noteListVM.noteText)
         }
         
-            .navigationTitle("\(newNoteName)")
+//            .navigationTitle("\(newNoteName)")
             .navigationBarTitleDisplayMode(.inline)
 //            .environmentObject(noteManager)
             .navigationBarItems(trailing: Button(action: {addNote()}) {

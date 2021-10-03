@@ -29,6 +29,28 @@ class CoreDataManager {
         save()
     }
     
+    func updatePost(noteId: NSManagedObjectID, noteName: String, noteText: String) throws {
+        
+        let existingNote = CoreDataManager.shared.getNoteById(id: noteId)
+        
+        if let existingNote = existingNote {
+            existingNote.noteName = noteName
+            existingNote.noteText = noteText
+            save()
+        }
+        
+    }
+    
+    func updateNote(_ note: NoteViewModel, noteName: String, noteText: String) {
+            let existingNote = CoreDataManager.shared.getNoteById(id: note.id)
+            if let existingNote = existingNote {
+                existingNote.noteName = noteName
+                existingNote.noteText = noteText
+                save()
+            }
+        }
+    
+    
     func getAllNotes() -> [Note] {
         let request:NSFetchRequest<Note> = Note.fetchRequest()
         do {
@@ -46,6 +68,19 @@ class CoreDataManager {
             print(error.localizedDescription)
         }
     }
+    
+//    func updateNote(name: String, text: String) {
+//        let request:NSFetchRequest<Note> = Note.fetchRequest()
+//            do {
+//                let changedNote = try CoreDataManager.shared.viewContext.fetch(request).first
+//                changedNote?.noteName = name
+//                changedNote?.noteText = text
+//                try viewContext.save()
+//            } catch {
+//                print("update error \(error)")
+//            }
+//            
+//        }
     
     let persistantContainer: NSPersistentContainer
     private  init() {
