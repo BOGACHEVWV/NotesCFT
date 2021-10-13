@@ -13,7 +13,8 @@ class NoteListViewModel: ObservableObject {
     @Published var notes = [NoteViewModel]()
     
     func fetchAllNotes() {
-        self.notes = DataManager.shared.getNotes().map(NoteViewModel.init)
+        self.notes = DataManager.shared.getNotes().map(NoteViewModel.init).sorted(by: {$0.date > $1.date})
+        
     }
     
     func removeNote(at index: Int) {

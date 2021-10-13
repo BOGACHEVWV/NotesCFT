@@ -12,8 +12,6 @@ struct MainView: View {
     @ObservedObject var noteVM = NoteListViewModel()
     @State private var addNewPresented = false
     
-    
-    
     var body: some View {
         NavigationView {
             VStack {

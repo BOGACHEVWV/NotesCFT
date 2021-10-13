@@ -22,11 +22,11 @@ class DataManager {
      // get notes
     func getNotes() -> [NoteEntity] {
         var notes = [NoteEntity]()
-        let noteRequest: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
+        let fetchRequest: NSFetchRequest<NoteEntity> = NoteEntity.fetchRequest()
         
         
         do {
-            notes = try managedContext.fetch(noteRequest)
+            notes = try managedContext.fetch(fetchRequest)
         } catch {
             print(error)
         }
