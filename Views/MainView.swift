@@ -21,13 +21,16 @@ struct MainView: View {
                         ZStack(alignment: .leading) {
                             NoteCell(noteVM: noteVM.notes[index])
                             NavigationLink(destination: UpdateNoteView(noteVM: noteVM.notes[index])) {
+                                EmptyView()
                             }
-                            
-                            .hidden()
+                            .opacity(0.0)
+                            .buttonStyle(PlainButtonStyle())
+//                            .hidden()
                         }
                     }
                     .onDelete(perform:delete(at:))
                 }
+                .listStyle(PlainListStyle())
             }
             .onAppear() {
                 refreshData()
@@ -37,7 +40,10 @@ struct MainView: View {
                 destination: NewNoteView().onDisappear(){noteVM.fetchAllNotes()})
             {
                 Image(systemName: "plus")
-                    .font(.title)
+                    .foregroundColor(.white)
+                    .font(.title2)
+
+                    
             })
         }       
         // На данный момент в SwiftUI нет возможно изменить цвет NavigationBar'а(или я не нашел), когда он не inline. Данный костыль помогает справиться с этой задачей.

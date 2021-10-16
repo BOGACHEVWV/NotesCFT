@@ -46,7 +46,9 @@ struct UpdateNoteView: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing: Button(action: { updateNote() }) {
-            Image(systemName: "checkmark")
+//            Image(systemName: "checkmark"
+            Text("Сохранить")
+                .foregroundColor(.white)
         })
     }
     
@@ -58,8 +60,4 @@ struct UpdateNoteView: View {
     
 }
 
-extension UpdateNoteView {
-    func changeNote() {        
-        updateNoteViewPresentation.wrappedValue.dismiss()
-    }
-}
+

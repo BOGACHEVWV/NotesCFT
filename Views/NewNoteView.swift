@@ -16,19 +16,29 @@ class AddNewNoteData: ObservableObject {
 struct NewNoteView: View {
     @Environment(\.presentationMode) var newNoteViewPresentation
     @ObservedObject var newNoteData = AddNewNoteData()
-    private let viewModel = AddNewNoteViewModel() 
+    private let viewModel = AddNewNoteViewModel()
+    
+    @State private var selectedTag = 0
         
     var body: some View {
         
         Group {
-            VStack(alignment: .leading, spacing: 10) {
+            
                 VStack(alignment: .leading) {
-                    TextField("Note name", text: $newNoteData.name)
+                   
+//                        Picker("", selection: $selectedTag) {
+//                          Text("title").tag(0)
+//                            Text("footnote").tag(1)
+//                        }
+//                        .pickerStyle(SegmentedPickerStyle())
+//                        .padding()
+                    TextField("Название", text: $newNoteData.name)
                         .font(.title)
                         .minimumScaleFactor(0.6) 
-                }
+               
                 Divider()
                 TextEditor( text:$newNoteData.text)
+                    .font(textStyle())
                 Spacer()
             }
             .padding()
@@ -39,7 +49,11 @@ struct NewNoteView: View {
         .navigationBarTitleDisplayMode(.inline)
         //            .environmentObject(noteManager)
         .navigationBarItems(trailing: Button(action: {addNewNote()}) {
-            Image(systemName: "checkmark")
+//            Image(systemName: "checkmark")
+            Text("Создать")
+                .foregroundColor(.white)
+//                .font(Font.title.weight(.medium))
+//                .font(.title2)
         })
     }
     
@@ -57,5 +71,17 @@ struct NewNoteView_Previews: PreviewProvider {
     }
 }
 
-
+extension NewNoteView {
+    func textStyle() -> Font {
+        var textFont: Font = .title
+        switch selectedTag {
+        case 0: textFont = .title
+        case 1: textFont = .footnote
+        default:
+            break
+        }
+        return textFont
+    }
+    
+}
 
