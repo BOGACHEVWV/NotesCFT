@@ -38,7 +38,8 @@ struct NewNoteView: View {
                
                 Divider()
                 TextEditor( text:$newNoteData.text)
-                    .font(textStyle())
+//                    .font(textStyle())
+//                        .font(tit)
                 Spacer()
             }
             .padding()
